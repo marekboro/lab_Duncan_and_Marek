@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Books</h1>
+{% for book in books %}
+<section id=silly_name>
+    <div>
+        <p>
+            TITLE : {{ book.title }}
+            AUTHOR : {{ book.author.name }}
+            GENRE : {{ book.genre }}
+        </p>
+    </div>
+    <div class="buttons">
+        <form class="delete-form" action="/books/{{book.id}}/delete" method="POST">
+            <button class="trash-button"><i class="fa fa-trash-o fa-3x" style="color:red"
+                    aria-hidden="true"></i></button>
+        </form>
+    </div>
+</section>
+{% endfor %}
+{% endblock %}
