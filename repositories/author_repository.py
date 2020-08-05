@@ -34,7 +34,7 @@ def select(id):
 
 
 def delete_all():
-    sql = "DELETE * FROM authors"
+    sql = "DELETE FROM authors"
     run_sql(sql)
 
 def delete(id):

@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS authors;
 CREATE TABLE authors (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255),
-    is_alive BOOLEAN,
+    is_alive BOOLEAN
 
 );
 
