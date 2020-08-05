@@ -5,19 +5,47 @@ from models.author import Author
 import repositories.author_repository as author_repository
 
 def save(book):
-    pass
+    sql = "INSERT INTO books (title,author_id,genre) VALUES (%s,%s,%s) RETURNING *"
+    values = [book.title,book.author.id,book.genre]
+    results = run_sql(sql,values)
+    id = results[0]['id']
+    book.id = id
+    return book
+
 
 def select_all():
-    pass
+    books = []
+    sql = "SELECT * FROM books"
+    results = run_sql(sql)
+
+    for row in results:
+        author = author_repository.select(row['auhtor_id'])
+        book = Book(row['title'], author, row['genre'], row['id'])
+        books.append(book)
+    return books
 
 def select(id):
-    pass
+    book = None
+    sql = "SELECT * FROM books WHERE id = %s"
+    values = [id]
+    result = run_sql(sql,values)[0]
 
+    if book is not None:
+        author = author_repository.select(result['author_id'])
+        book = Book(result['title'], author, result['genre'], result['id'])
+    return book
+    
 def delete_all():
-    pass
+    sql = "DELETE FROM books"
+    run_sql(sql)
 
 def delete(id):
-    pass
+    sql = "DELETE FROM books WHERE id = %s"
+    values = [id]
+    run_sql(sql,values)
+
 
 def update(book):
-    pass
+    sql = "UPDATE books SET (title, author_id, genre) = (%s, %s, %s) WHERE id = %s"
+    values = [book.title, book.author.id, book.genre, book.id]
+    run_sql(sql, values)
